@@ -10,7 +10,7 @@
     "eslint-plugin-react": "^6.8.0"
   },
   "scripts": {
-    "dev": "webpack -wd"
+    "dev": "webpack -w"
   },
   "dependencies": {
     "axios": "^0.15.3",

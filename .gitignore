@@ -4,3 +4,6 @@ npm-debug.log
 log/
 db/development.sqlite3
 tmp/
+
+
+app/assets/javascripts/*-bundle.js*

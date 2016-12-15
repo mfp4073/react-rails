@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/components/roots/App.js',
+  entry: {
+    game: './src/components/roots/GameRoot.js',
+    products: './src/components/roots/ProductsRoot.js'
+  },
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'app', 'assets', 'javascripts'),
+    filename: '[name]-bundle.js'
   },
   module: {
     loaders: [
