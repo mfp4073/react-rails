@@ -27,7 +27,7 @@ class Cell extends React.Component {
 
 Cell.propTypes = {
   id: PropTypes.string.isRequired,
-  status: PropTypes.string,
+  status: PropTypes.any,
 };
 
 export default Cell;

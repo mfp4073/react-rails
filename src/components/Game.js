@@ -7,10 +7,15 @@ import Cell from './Cell';
 import config from '../config';
 
 class Game extends React.Component {
-  state = { gridData: [], challengeCells: {} };
-  // challengeCells = { '0-0': true, '1-1' : true, '4-4': true };
+  state = {
+    gridData: [],
+    challengeCells: {},
+    guesses: {
+      '0-0': 'correct',
+      '4-4': 'wrong',
+    }
+  };
 
-  // fetch the data, http://server/api/index
   componentDidMount() {
     axios.get(`${config.serverUrl}/api/index`)
       .then(resp => {
@@ -23,8 +28,13 @@ class Game extends React.Component {
       return (
         <Row key={index}>
           {row.map(cellId => {
-            const isActive = this.state.challengeCells[cellId];
-            return <Cell id={cellId} key={cellId} status={isActive ? 'active' : ''} />;
+            const isActive = this.state.challengeCells[cellId] ? 'active' : '';
+            const isCorrect = this.state.guesses[cellId];
+            const status = isCorrect !== undefined ? isCorrect : isActive;
+            return (
+              <Cell id={cellId} key={cellId}
+                status={status} />
+            );
           })}
         </Row>
       );
