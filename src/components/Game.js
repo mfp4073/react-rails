@@ -10,10 +10,19 @@ class Game extends React.Component {
   state = {
     gridData: [],
     challengeCells: {},
-    guesses: {
-      '0-0': 'correct',
-      '4-4': 'wrong',
-    }
+    guesses: {}
+  };
+
+  recordGuess = (cellId, guess) => {
+    this.setState((prevState) => {
+      return {
+        guesses: {
+          ...prevState.guesses,
+          [cellId]: guess,
+        }
+      };
+    });
+
   };
 
   componentDidMount() {
@@ -33,7 +42,7 @@ class Game extends React.Component {
             const status = isCorrect !== undefined ? isCorrect : isActive;
             return (
               <Cell id={cellId} key={cellId}
-                status={status} />
+                status={status} recordGuess={this.recordGuess} />
             );
           })}
         </Row>

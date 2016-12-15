@@ -12,7 +12,11 @@ import { cell, cellState } from '../styles/game';
 
 class Cell extends React.Component {
   // state = { cellStatus: 'correct' };
-  onClick = () => { console.info(this.props.id); };
+  onClick = () => {
+    this.props.recordGuess(
+      this.props.id, this.props.status === 'active' ? 'correct' : 'wrong'
+    );
+  };
 
   render() {
     return (
@@ -27,7 +31,8 @@ class Cell extends React.Component {
 
 Cell.propTypes = {
   id: PropTypes.string.isRequired,
-  status: PropTypes.any,
+  status: PropTypes.string,
+  recordGuess: PropTypes.func,
 };
 
 export default Cell;
