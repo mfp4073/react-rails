@@ -10,7 +10,8 @@ class Game extends React.Component {
   state = {
     gridData: [],
     challengeCells: {},
-    guesses: {}
+    guesses: {},
+    gameState: 'challenge',
   };
 
   recordGuess = (cellId, guess) => {
@@ -28,8 +29,18 @@ class Game extends React.Component {
   componentDidMount() {
     axios.get(`${config.serverUrl}/api/index`)
       .then(resp => {
-        this.setState(resp.data);
+        this.setState(resp.data, () => {
+          this.timerId = setTimeout(() => {
+            this.setState({
+              gameState: 'pick'
+            });
+          }, 5000);
+        });
       });
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerId);
   }
 
   render() {
@@ -42,6 +53,7 @@ class Game extends React.Component {
             const status = isCorrect !== undefined ? isCorrect : isActive;
             return (
               <Cell id={cellId} key={cellId}
+                gameState={this.state.gameState}
                 status={status} recordGuess={this.recordGuess} />
             );
           })}

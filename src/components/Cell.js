@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { cell, cellState } from '../styles/game';
+import { globalCellStyle, cellState } from '../styles/game';
 
 // const Cell = (props) => {
 //   const onClick = () => console.log(props.id);
@@ -18,10 +18,22 @@ class Cell extends React.Component {
     );
   };
 
+  cellStyle() {
+
+    let status = this.props.status;
+    let css = globalCellStyle;
+
+    if (this.props.gameState === 'pick' && this.props.status === 'active') {
+      status = '';
+    }
+
+    return { ...css, ...cellState[status]};
+  }
+
   render() {
     return (
       <div className="cell"
-         style={{ ...cell, ...cellState[this.props.status] }}
+         style={this.cellStyle()}
          onClick={this.onClick}>
         {this.props.id}
       </div>
@@ -33,6 +45,7 @@ Cell.propTypes = {
   id: PropTypes.string.isRequired,
   status: PropTypes.string,
   recordGuess: PropTypes.func,
+  gameState: PropTypes.string,
 };
 
 export default Cell;

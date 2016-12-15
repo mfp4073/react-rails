@@ -1,4 +1,4 @@
-export const cell = {
+export const globalCellStyle = {
   display: 'inline-block',
   width: 100,
   height: 100,
