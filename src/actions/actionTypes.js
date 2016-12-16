@@ -1,0 +1,3 @@
+export default {
+  RECEIVE_PRODUCTS_DATA: 'RECEIVE_PRODUCTS_DATA'
+};

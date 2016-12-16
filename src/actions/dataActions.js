@@ -1,3 +1,5 @@
+import types from './actionTypes';
+
 export const fetchProducts = () => {
   return (dispatch) => {
     fetch(`https://lcgraph.herokuapp.com/graphql?query=
@@ -11,7 +13,7 @@ export const fetchProducts = () => {
     `).then(resp => resp.json())
     .then(data => {
       dispatch({
-        type: 'RECEIVE_PRODUCTS_DATA',
+        type: types.RECEIVE_PRODUCTS_DATA,
         data: data.data.products,
       });
     });

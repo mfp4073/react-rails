@@ -7,7 +7,11 @@ const initialState = {
 };
 
 export default () => {
-  const store = createStore(appReducer, initialState);
+  const store = createStore(
+    appReducer,
+    initialState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
 
   return store;
 };
