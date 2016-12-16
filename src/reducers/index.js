@@ -5,7 +5,10 @@ const appReducer = (state = {}, action) => {
   case types.RECEIVE_PRODUCTS_DATA:
     return {
       ...state,
-      products: action.data,
+      products: action.data.reduce((acc, e) => {
+        acc[e.id] = e;
+        return acc;
+      }, {}),
     };
   default:
     return state;

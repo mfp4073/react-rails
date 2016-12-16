@@ -22,7 +22,7 @@ class Products extends Component {
   }
 
   maybeFetchPlansData = (productId) => {
-    const product = this.state.products.find(product => product.id === productId);
+    const product = this.state.products[productId];
     if (product.plans) {
       return;
     }
@@ -43,15 +43,13 @@ class Products extends Component {
     `).then(resp => resp.json())
     .then(data => {
       let products = this.state.products;
-      const productIndex = this.state.products.findIndex(product => product.id === productId);
-      products[productIndex] = {
+      products[productId] = {
         ...product,
         plans: data.data.product.plans
       };
       this.setState({
         products
       });
-
     });
   }
 
@@ -83,8 +81,8 @@ class Products extends Component {
   render() {
     return (
       <ul>
-        {this.state.products.map(product =>
-          <Product key={product.id} {...product} markProductActive={this.markProductActive} />
+        {Object.entries(this.state.products).map(([productId, product])=>
+          <Product key={productId} {...product} markProductActive={this.markProductActive} />
         )}
       </ul>
     );
