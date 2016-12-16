@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Product from './Product';
 
+import Form from './Form.js';
 import storeConfig from '../store';
 import * as actions from '../actions/dataActions';
 
@@ -43,15 +44,18 @@ class Products extends Component {
 
   render() {
     return (
-      <ul>
-        {Object.entries(this.state.products).map(([productId, product])=>
-          <Product key={productId}
-            {...product}
-            markProductActive={this.markProductActive}
-            isProductActive={this.state.activeProductId === productId}
-          />
-        )}
-      </ul>
+      <div>
+        <Form />
+        <ul>
+          {Object.entries(this.state.products).map(([productId, product])=>
+            <Product key={productId}
+              {...product}
+              markProductActive={this.markProductActive}
+              isProductActive={this.state.activeProductId === productId}
+            />
+          )}
+        </ul>
+      </div>
     );
   }
 }
