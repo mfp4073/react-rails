@@ -21,11 +21,11 @@ export const fetchProducts = () => {
 };
 
 export const maybeFetchPlansData = (productId) => {
-  return (dispatch) => {
-    // const product = this.state.products[productId];
-    // if (product.plans) {
-    //   return;
-    // }
+  return (dispatch, getState) => {
+    const product = getState().products[productId];
+    if (product.plans) {
+      return;
+    }
 
     const variables = JSON.stringify({
       "sku": productId

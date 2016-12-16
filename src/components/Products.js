@@ -8,10 +8,7 @@ class Products extends Component {
   constructor(props) {
     super(props);
     this.store = storeConfig();
-    this.state = {
-      ...this.store.getState(),
-      activeProductId: null,
-    };
+    this.state = this.store.getState();
   }
   componentDidMount() {
     this.store.subscribe(() => {
