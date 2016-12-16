@@ -1,8 +1,21 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
 const loadInitialData = () => {
   return {
     type: 'LOAD_INITIAL_DATA',
+  };
+};
+
+const decrementTest = () => {
+  return {
+    type: 'DECREMENT_TEST'
+  };
+};
+
+const setTestTo = (value) => {
+  return {
+    type: 'SET_TEST_TO',
+    value
   };
 };
 
@@ -12,14 +25,33 @@ const unReduce = () => {
   };
 };
 
-const reducer = (initialState = {test: 42}, action) => {
-  console.log(action);
-  let newState = {...initialState};
-  newState.reduced = true;
-  return newState;
+const testReducer = (initialState = 42, action) => {
+  switch (action.type) {
+  case 'SET_TEST_TO':
+    return action.value
+  case 'DECREMENT_TEST':
+    return initialState - 1;
+  default:
+    return initialState;
+  }
 };
 
-const store = createStore(reducer);
+const reducedReducer = (initialState = true, action) => {
+  switch (action.type) {
+  case 'UNREDUCE':
+    return false;
+  default:
+    return initialState;
+  }
+};
+
+
+const appReducer = combineReducers({
+  test: testReducer,
+  reduced: reducedReducer
+});
+
+const store = createStore(appReducer);
 
 store.dispatch(loadInitialData());
 
@@ -32,8 +64,11 @@ store.dispatch(decrementTest());
 store.dispatch(decrementTest());
 store.dispatch(decrementTest());
 
+store.dispatch(setTestTo(50));
 
 const state = store.getState();
 
+console.log('STATE =', state);
+
 console.assert(state.reduced === false);
-console.assert(state.test === 38);
+console.assert(state.test === 50);
