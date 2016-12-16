@@ -1,11 +1,13 @@
 const appReducer = (state = {}, action) => {
-  if (action.type === 'DECREMENT_TEST') {
+  switch (action.type) {
+  case 'RECEIVE_DATA':
     return {
       ...state,
-      test: state.test - 1
+      products: action.data,
     };
+  default:
+    return state;
   }
-  return state;
 };
 
 export default appReducer;

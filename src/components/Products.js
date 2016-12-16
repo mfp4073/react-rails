@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Product from './Product';
 
 import storeConfig from '../store';
+import { fetchProducts } from '../actions/dataActions';
 
 class Products extends Component {
   constructor(props) {
@@ -9,34 +10,15 @@ class Products extends Component {
     this.store = storeConfig();
     this.state = {
       ...this.store.getState(),
-      products: [],
       activeProductId: null,
     };
-    console.log(this.store.getState());
-    setTimeout(() => {
-      this.store.dispatch({
-        type: 'DECREMENT_TEST'
-      });
-    }, 1000);
   }
   componentDidMount() {
     this.store.subscribe(() => {
       this.setState(this.store.getState());
     });
-    fetch(`https://lcgraph.herokuapp.com/graphql?query=
-      {
-        products {
-          id
-          name
-          description
-        }
-      }
-    `).then(resp => resp.json())
-    .then(data => {
-      this.setState({
-        products: data.data.products
-      });
-    });
+
+    fetchProducts()(this.store.dispatch);
   }
 
   maybeFetchPlansData = (productId) => {
@@ -101,7 +83,6 @@ class Products extends Component {
   render() {
     return (
       <ul>
-        {this.state.test}
         {this.state.products.map(product =>
           <Product key={product.id} {...product} markProductActive={this.markProductActive} />
         )}
