@@ -1,12 +1,28 @@
 import React, { Component, PropTypes } from 'react';
 import Product from './Product';
 
+import storeConfig from '../store';
+
 class Products extends Component {
-  state = {
-    products: [],
-    activeProductId: null,
+  constructor(props) {
+    super(props);
+    this.store = storeConfig();
+    this.state = {
+      ...this.store.getState(),
+      products: [],
+      activeProductId: null,
+    };
+    console.log(this.store.getState());
+    setTimeout(() => {
+      this.store.dispatch({
+        type: 'DECREMENT_TEST'
+      });
+    }, 1000);
   }
   componentDidMount() {
+    this.store.subscribe(() => {
+      this.setState(this.store.getState());
+    });
     fetch(`https://lcgraph.herokuapp.com/graphql?query=
       {
         products {
@@ -85,6 +101,7 @@ class Products extends Component {
   render() {
     return (
       <ul>
+        {this.state.test}
         {this.state.products.map(product =>
           <Product key={product.id} {...product} markProductActive={this.markProductActive} />
         )}
