@@ -38,16 +38,18 @@ class Products extends Component {
   // }
   //
   markProductActive = (productId) => {
-    this.setState({
-      activeProductId: productId
-    });
+    this.store.dispatch(actions.markProductActive(productId));
   }
 
   render() {
     return (
       <ul>
         {Object.entries(this.state.products).map(([productId, product])=>
-          <Product key={productId} {...product} markProductActive={this.markProductActive} />
+          <Product key={productId}
+            {...product}
+            markProductActive={this.markProductActive}
+            isProductActive={this.state.activeProductId === productId}
+          />
         )}
       </ul>
     );

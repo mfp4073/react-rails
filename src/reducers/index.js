@@ -21,6 +21,11 @@ const appReducer = (state = {}, action) => {
         }
       }
     };
+  case types.MARK_PRODUCT_ACTIVE:
+    return {
+      ...state,
+      activeProductId: action.productId,
+    };
   default:
     return state;
   }

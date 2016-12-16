@@ -16,7 +16,7 @@ class Product extends Component {
         <div className="product-description">
           {this.props.description}
         </div>
-        <PlanList plans={this.props.plans} />
+        {this.props.isProductActive ? <PlanList plans={this.props.plans} /> : null}
       </li>
     );
   }

@@ -50,3 +50,8 @@ export const maybeFetchPlansData = (productId) => {
     });
   };
 };
+
+export const markProductActive = (productId) => ({
+  type: types.MARK_PRODUCT_ACTIVE,
+  productId
+});
