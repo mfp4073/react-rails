@@ -10,6 +10,17 @@ const appReducer = (state = {}, action) => {
         return acc;
       }, {}),
     };
+  case types.RECEIVE_ONE_PRODUCT_PLANS:
+    return {
+      ...state,
+      products: {
+        ...state.products,
+        [action.productId]: {
+          ...state.products[action.productId],
+          plans: action.plans,
+        }
+      }
+    };
   default:
     return state;
   }
