@@ -4,26 +4,28 @@ const URL_REGEX = /.*/;
 const validationRules = {
   "email": {
     pattern: EMAIL_REGEX,
-    required: true
   },
   "url": {
-    regex: URL_REGEX,
+    pattern: URL_REGEX,
   },
 };
 
 export default (state) => {
   let inputs = {...state};
   Object.entries(inputs).forEach(([, input]) => {
-    if (!validationRules[input.type]) return;
-    Object.entries(validationRules[input.type]).forEach(([ruleType, ruleValue]) => {
+    input.error = '';
+    const rules = validationRules[input.type] || {};
+    Object.entries(rules).forEach(([ruleType, ruleValue]) => {
       switch (ruleType) {
       case 'pattern':
         input.error = input.value.match(ruleValue) ? '' : 'Not a good one';
         break;
       default:
-
       }
     });
+    if (input.required) {
+      input.error = input.value ? input.error : 'This is required';
+    }
   });
   return inputs;
 };

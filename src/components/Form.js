@@ -8,8 +8,8 @@ class Form extends Component {
   };
 
   state = {
-    email: { type: 'email', value: '' },
-    message: { value: '' },
+    email: { type: 'email', required: true, value: '' },
+    message: { type: 'message', required: true, value: '' },
     country: { value: '' },
     checked: { value: false },
   };
@@ -40,7 +40,6 @@ class Form extends Component {
 
     this.setState(stateWithErrorsIfAny);
 
-
     // if (!this.state.email.value.match()) {
     //   this.setState((prevState) => {
     //     return {
@@ -65,9 +64,10 @@ class Form extends Component {
             value={this.state.email.value} onChange={this.handleChange} />
           <p className="help-block text-danger">{this.state.email.error}</p>
         </div>
-        <div className="form-group">
+        <div className={`form-group ${this.state.message.error ? 'has-error' : ''}`}>
           <label htmlFor="exampleInputEmail1">Message</label>
           <textarea name="message" className="form-control" value={this.state.message.value} onChange={this.handleChange}></textarea>
+          <p className="help-block text-danger">{this.state.message.error}</p>
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Country</label>
